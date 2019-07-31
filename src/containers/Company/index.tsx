@@ -5,8 +5,6 @@ import CompanyService from '../../services/CompanyService';
 import EditCompany from '../../components/EditCompany';
 import CompanyContext from './CompanyContext';
 import CompanyDetails from '../../components/CompanyDetails';
-import { CompanyInfo } from '../../Models/CompanyInfo';
-import CompanyDetail from '../../Models/CompanyDetail';
 
 interface Params {
   id?: string;
@@ -37,14 +35,17 @@ const Company = (props: RouteComponentProps<Params>): JSX.Element => {
         {!company && <h1>No Company Found</h1>}
         {company && editing && (
           <EditCompany
-            onDelete={ (i) => CompanyService.deleteEmployee(i) }
-            onSubmit={ (c) => CompanyService.updateCompany(c).then(c => setCompany(c)) }
-            company={company} />
+            onDelete={i => CompanyService.deleteEmployee(i)}
+            onSubmit={c => CompanyService.updateCompany(c).then(c => setCompany(c))}
+            company={company}
+          />
         )}
         {company && !editing && <CompanyDetails company={company} />}
         {backButton}
         <Button type="button" onClick={() => setEditing(!editing)}>
-          { editing ? 'Details' : 'Edit' }
+          {editing ? 'Details' : 'Edit'}
+        </Button>
+      </CompanyContext.Provider>
     </div>
   );
 };

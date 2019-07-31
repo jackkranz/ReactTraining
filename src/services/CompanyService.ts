@@ -1,18 +1,22 @@
 import { CompanyInfo } from '../Models/CompanyInfo';
 import CompanyDetail from '../Models/CompanyDetail';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fetch = require('node-fetch');
+
 class CompanyService {
   static baseUrl = 'http://localhost:5000/api/';
 
   static fetchCompanies = (): Promise<CompanyInfo[]> => {
+    // eslint-disable-next-line no-console
     return fetch(`${CompanyService.baseUrl}companies`)
-      .then(response => {
+      .then((response: any) => {
         if (response.ok) {
           return response.json();
         }
         return null;
       })
-      .then(json => {
+      .then((json: any) => {
         const companies = json as CompanyInfo[];
         return companies;
       });
@@ -20,13 +24,13 @@ class CompanyService {
 
   static fetchCompany = (id: string): Promise<CompanyDetail> => {
     return fetch(`${CompanyService.baseUrl}companies/${id}`)
-      .then(response => {
+      .then((response: any) => {
         if (response.ok) {
           return response.json();
         }
         return null;
       })
-      .then(json => {
+      .then((json: any) => {
         const companies = json as CompanyDetail;
         return companies;
       });
@@ -39,7 +43,7 @@ class CompanyService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(company),
-    }).then(response => {
+    }).then((response: any) => {
       const { ok } = response;
       if (!ok) {
         return null;
@@ -51,7 +55,7 @@ class CompanyService {
   static deleteEmployee = (id: number): void => {
     fetch(`${CompanyService.baseUrl}employees/${id}`, {
       method: 'DELETE',
-    }).then(response => {
+    }).then((response: any) => {
       const { ok } = response;
       if (!ok) {
         return false;
@@ -62,14 +66,14 @@ class CompanyService {
 
   static fetchRoles = (): Promise<string[]> => {
     return fetch(`${CompanyService.baseUrl}roles`)
-      .then(response => {
+      .then((response: any) => {
         const { ok } = response;
         if (!ok) {
           return null;
         }
         return response.json();
       })
-      .then(json => {
+      .then((json: any) => {
         const roles = json as string[];
         return roles;
       });

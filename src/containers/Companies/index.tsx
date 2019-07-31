@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Companies.css';
+//import './Companies.css';
 import { CompanyInfo } from '../../Models/CompanyInfo';
 import CompanyService from '../../services/CompanyService';
 import CompanyList from '../../components/CompanyList';
@@ -16,7 +16,7 @@ class Companies extends Component<{}, State> {
     return <CompanyList loading={loading} companies={companies} />;
   }
 
-  componentDidMount = (): void => {
+  componentWillMount = (): void => {
     this.setState({ loading: true });
     CompanyService.fetchCompanies().then(companies => this.setState({ companies, loading: false }));
   };
