@@ -7,5 +7,5 @@
     "trailingComma": "all",
     "bracketSpacing": true,
     "arrowParens": "avoid",
-    "jsxBracketSameLine": false
+    "jsxBracketSameLine": true
 }
