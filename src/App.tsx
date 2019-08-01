@@ -1,12 +1,26 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Companies from './containers/Companies';
+import NotFound from './components/NotFound';
+import Company from './containers/Company';
 
-const App: React.FC = (): JSX.Element => {
+const App = (): JSX.Element => {
+  const title = 'React Training';
   return (
     <div className="App">
-      <header className="App-header">React Training</header>
+      <header className="App-header">{title}</header>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={Companies} exact />
+          <Route path="/company/:id" component={Company} exact />
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 };
 
 export default App;
+
+// npm i react-router-dom @types/react-router-dom //
