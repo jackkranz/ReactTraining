@@ -1,7 +1,8 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { CompanyDetail } from '../../models/CompanyDetail';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik';
+import { CompanyDetail, Employee } from '../../models/CompanyDetail';
+import EditEmployee from '../EditEmployee';
 
 interface Props {
   company: CompanyDetail;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const EditCompany = (props: Props): JSX.Element => {
-  const { name, initialContactDate, estimatedRevenue } = props.company; // Destructuring Props
+  const { name, initialContactDate, estimatedRevenue, employees } = props.company; // Destructuring Props
 
   const validator = Yup.object().shape({
     name: Yup.string().required('You need a name'),
@@ -21,7 +22,7 @@ const EditCompany = (props: Props): JSX.Element => {
 
   return (
     <Formik
-      initialValues={{ name, initialContactDate, estimatedRevenue }}
+      initialValues={{ name, initialContactDate, estimatedRevenue, employees }}
       validationSchema={validator}
       onSubmit={(values, { setSubmitting }) => {
         const company: CompanyDetail = {
@@ -31,15 +32,41 @@ const EditCompany = (props: Props): JSX.Element => {
         props.onSubmit(company);
       }}
     >
-      <Form>
-        <Field type="text" name="name" />
-        <ErrorMessage name="name" />
-        <Field type="date" name="initialContactDate" />
-        <ErrorMessage name="initialContactDate" />
-        <Field type="number" name="estimatedRevenue" />
-        <ErrorMessage name="estimatedRevenue" />
-        <button type="submit"> Submit</button>
-      </Form>
+      {({ values }) => (
+        <Form>
+          <Field type="text" name="name" />
+          <ErrorMessage name="name" />
+          <Field type="date" name="initialContactDate" />
+          <ErrorMessage name="initialContactDate" />
+          <Field type="number" name="estimatedRevenue" />
+          <ErrorMessage name="estimatedRevenue" />
+          <FieldArray
+            name="employees"
+            render={arrayHelpers => (
+              <div>
+                {values.employees.map((employee, index) => (
+                  <EditEmployee key={employee.id} employee={employee} formKey={`employees.${index}`} />
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    arrayHelpers.push({
+                      id: 0,
+                      name: '',
+                      email: '',
+                      role: '',
+                    })
+                  }
+                >
+                  add
+                </button>
+              </div>
+            )}
+          />
+          <button type="submit"> Submit</button>
+        </Form>
+      )}
     </Formik>
   );
 };
