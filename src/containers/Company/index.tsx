@@ -5,6 +5,7 @@ import { CompanyDetail } from '../../models/CompanyDetail';
 import CompanyDisplay from '../../components/CompanyDisplay';
 import EditCompany from '../../components/EditCompany';
 import CompanyService from '../../services/CompanyService';
+import CompanyContext from './CompanyContext';
 
 interface CompanyParams {
   id?: string;
@@ -12,6 +13,7 @@ interface CompanyParams {
 
 interface State {
   company: CompanyDetail | null;
+  roles: string[];
   loading: boolean;
   editing: boolean;
 }
@@ -19,12 +21,12 @@ interface State {
 class Company extends Component<RouteComponentProps<CompanyParams>, State> {
   constructor(props: any) {
     super(props);
-    this.state = { company: null, loading: false, editing: false };
+    this.state = { company: null, loading: false, editing: false, roles: [] };
   }
   render(): React.ReactNode {
-    const { company, editing } = this.state;
+    const { company, editing, roles } = this.state;
     return (
-      <div>
+      <CompanyContext.Provider value={{ roles }}>
         {company && <CompanyDisplay company={company} />}
         {company && editing && <EditCompany onSubmit={this.handleSubmit} company={company} />}
         <div>
@@ -37,7 +39,7 @@ class Company extends Component<RouteComponentProps<CompanyParams>, State> {
             </button>
           )}
         </div>
-      </div>
+      </CompanyContext.Provider>
     );
   }
 
@@ -66,6 +68,9 @@ class Company extends Component<RouteComponentProps<CompanyParams>, State> {
     this.setState({ loading: true });
     CompanyService.fetchCompany(id).then(company => {
       this.setState({ company, loading: false });
+    });
+    CompanyService.fetchRoles().then(roles => {
+      this.setState({ roles });
     });
   };
 }

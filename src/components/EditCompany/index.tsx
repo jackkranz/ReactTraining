@@ -18,6 +18,16 @@ const EditCompany = (props: Props): JSX.Element => {
     estimatedRevenue: Yup.number()
       .min(5, 'No deal')
       .max(999999999, 'That is too much money'),
+    employees: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string()
+          .min(2, 'too short!')
+          .max(50, 'too long')
+          .required('name required'),
+        email: Yup.string().email('Must be a valid email'),
+        role: Yup.string().required('what job do they do?'),
+      }),
+    ),
   });
 
   return (
@@ -26,9 +36,10 @@ const EditCompany = (props: Props): JSX.Element => {
       validationSchema={validator}
       onSubmit={(values, { setSubmitting }) => {
         const company: CompanyDetail = {
-          ...props.company,
+          id: props.company.id,
           ...values,
         };
+        console.log(company);
         props.onSubmit(company);
       }}
     >

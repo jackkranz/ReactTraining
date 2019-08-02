@@ -35,6 +35,21 @@ class CompanyService {
       return ok? company: null;
     })
   }
+
+  static fetchRoles = (): Promise<string[]> => {
+    return fetch(`${CompanyService.baseUrl}roles`)
+      .then(response => {
+        const { ok } = response;
+        if (!ok) {
+          return null;
+        }
+        return response.json();
+      })
+      .then(json => {
+        const roles = json as string[];
+        return roles;
+      });
+  };
 }
 
 export default CompanyService;
