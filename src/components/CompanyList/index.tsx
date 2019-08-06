@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CompanyDTO from '../../models/CompanyDTO';
 import CompanyListItem from '../CompanyListItem';
+import Loader from '../../hoc/Loader';
 
 interface Props {
   companies: CompanyDTO[];
+  loading: boolean;
 }
 
 const CompanyList = (props: Props): JSX.Element => {
@@ -22,4 +24,4 @@ const CompanyList = (props: Props): JSX.Element => {
   );
 };
 
-export default CompanyList;
+export default Loader(CompanyList);

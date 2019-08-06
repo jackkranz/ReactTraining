@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rendering Matches Snapshot 1`] = `
+<div
+  className="company-list-item"
+>
+  <h2>
+    test company
+  </h2>
+</div>
+`;

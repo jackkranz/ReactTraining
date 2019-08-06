@@ -19,14 +19,7 @@ class Companies extends Component<{}, State> {
   render(): ReactNode {
     const { companies, loading } = this.state;
 
-    return (
-      <div>
-        {loading && <h1>Loading...</h1>}
-        {companies.length === 0 && !loading ?
-          <h2>There is nothing here</h2>
-        : <CompanyList companies={companies} />}
-      </div>
-    );
+    return <CompanyList loading={loading} companies={companies} />;
   }
 
   componentDidMount = (): void => {

@@ -43,6 +43,7 @@ const EditCompany = (props: Props): JSX.Element => {
         props.onSubmit(company);
       }}
     >
+      {' '}
       {({ values }) => (
         <Form>
           <Field type="text" name="name" />
