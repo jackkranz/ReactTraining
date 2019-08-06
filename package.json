@@ -36,7 +36,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "start:server": "NODE_ENV=development node build_server/compiled",
-    "liam": "node node_modules/webpack/bin/webpack.js --config webpack.server.config.js"
+    "build:server": "node node_modules/webpack/bin/webpack.js --config webpack.server.config.js"
   },
   "eslintConfig": {
     "npm extends": "react-app"
